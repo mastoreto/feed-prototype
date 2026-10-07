@@ -7,6 +7,7 @@ import { Editor } from "@/features/editor/Editor";
 import {
   type Format,
   NETWORK_NAME,
+  type Pin,
   type Platform,
   type PostDraft,
 } from "@/features/platforms/types";
@@ -24,6 +25,7 @@ type Loaded = {
     hashtags: string;
     notes: string;
     media: string[];
+    pins: unknown;
     scheduledAt: Date | null;
   }[];
 };
@@ -53,7 +55,11 @@ export function CampaignView({ id }: { id: string }) {
 function CampaignEditor({ campaign }: { campaign: Loaded }) {
   const trpc = useTRPC();
   const [posts, setPosts] = useState<PostDraft[]>(() =>
-    campaign.posts.map((p) => ({ ...p, format: p.format as Format })),
+    campaign.posts.map((p) => ({
+      ...p,
+      format: p.format as Format,
+      pins: p.pins as Pin[],
+    })),
   );
   const [name, setName] = useState(campaign.name);
   const [status, setStatus] = useState<"saved" | "saving" | "error">("saved");

@@ -20,6 +20,7 @@ const p = (
   hashtags,
   notes,
   media: [`art:${img}`],
+  pins: [],
   scheduledAt: null,
 });
 
@@ -80,3 +81,10 @@ export const samplePosts: Record<Platform, PostDraft[]> = {
     ),
   ],
 };
+
+// Red-pen notes on the first Instagram piece: they feed the landing demo and the /try starting point.
+samplePosts.INSTAGRAM[0].pins = [
+  { id: "s-pin-1", x: 14, y: 30, text: "Imagen: dirección de arte" },
+  { id: "s-pin-2", x: 93, y: 82, text: "Copy: tono y llamado a la acción" },
+  { id: "s-pin-3", x: 94, y: 91, text: "Hashtags: alcance orgánico" },
+];

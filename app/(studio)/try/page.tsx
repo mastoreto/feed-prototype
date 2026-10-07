@@ -28,6 +28,7 @@ export default function TryPage() {
         const revive = (l: PostDraft[]) =>
           l.map((p) => ({
             ...p,
+            pins: p.pins ?? [], // drafts saved before pins existed
             scheduledAt: p.scheduledAt ? new Date(p.scheduledAt) : null,
           }));
         setDrafts({

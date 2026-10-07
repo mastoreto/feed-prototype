@@ -16,6 +16,10 @@ bun run dev
 
 Rutas: `/` landing · `/try` editor sin cuenta (borrador en localStorage) · `/login` `/signup` · `/dashboard` · `/clients/[id]` · `/campaigns/[id]` · `/guias` `/privacidad` `/terminos` · `/ads.txt`.
 
+## Notas sobre la pieza
+
+En el editor, «Anotar» (o «Añadir nota» con teclado) coloca pines rojos sobre la pieza con su texto. Se guardan por publicación (`Post.pins`, porcentajes de la pieza) y se exportan en la imagen junto a la lista numerada de la hoja ampliada.
+
 ## Verificar
 
 `bun run lint` · `bun run typecheck` · `bun run build`. Con el servidor de producción y la base Docker arriba, `bun run e2e` comprueba registro, CRUD, guardado y que un usuario no accede a datos de otro.

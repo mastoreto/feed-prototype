@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { PinLayer } from "@/features/platforms/PinLayer";
 import { hasSafeZones, Overview, Piece } from "@/features/platforms/render";
 import type { Platform, PostDraft, Profile } from "@/features/platforms/types";
 import { Sheet } from "./Sheet";
@@ -74,11 +75,6 @@ function Surface({
   sheet: boolean;
   index: number;
 }) {
-  const pins =
-    platform === "INSTAGRAM" &&
-    sheet &&
-    what !== "overview" &&
-    (post.format === "post" || post.format === "carousel");
   const tall = post.format === "story" || post.format === "reel";
   const width =
     what === "overview"
@@ -113,22 +109,15 @@ function Surface({
             safe={false}
           />
         )}
-        {pins && (
-          <>
-            <span className="pin" style={{ top: "34%" }}>
-              1
-            </span>
-            <span className="pin" style={{ top: "80%" }}>
-              2
-            </span>
-            <span className="pin" style={{ top: "89%" }}>
-              3
-            </span>
-          </>
-        )}
+        {sheet && what !== "overview" && <PinLayer pins={post.pins} />}
       </div>
       {sheet && what !== "overview" && (
-        <Sheet platform={platform} post={post} profile={profile} pins={pins} />
+        <Sheet
+          platform={platform}
+          post={post}
+          profile={profile}
+          pins={post.pins}
+        />
       )}
     </div>
   );

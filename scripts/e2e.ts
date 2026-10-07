@@ -54,6 +54,7 @@ await t.campaign.savePosts.mutate({
       hashtags: "#a",
       notes: "n",
       media: ["art:0"],
+      pins: [{ id: "a", x: 10.5, y: 20, text: "mira aquí" }],
       scheduledAt: new Date("2026-10-17T14:00:00Z"),
     },
     {
@@ -67,6 +68,12 @@ await t.campaign.savePosts.mutate({
   ],
 });
 const got = await t.campaign.byId.query({ id: k.id });
+console.log(
+  "pins roundtrip:",
+  JSON.stringify(got.posts[0].pins),
+  "| default for post without pins:",
+  JSON.stringify(got.posts[1].pins),
+);
 console.log(
   "campaign",
   got.name,

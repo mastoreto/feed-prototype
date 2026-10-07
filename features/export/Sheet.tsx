@@ -1,6 +1,7 @@
 import {
   formatInfo,
   NETWORK_NAME,
+  type Pin,
   type Platform,
   type PostDraft,
   type Profile,
@@ -27,7 +28,7 @@ export function Sheet({
   platform: Platform;
   post: PostDraft;
   profile: Profile;
-  pins: boolean;
+  pins: Pin[];
 }) {
   const f = formatInfo(platform, post.format);
   return (
@@ -68,17 +69,14 @@ export function Sheet({
           <p>{post.notes}</p>
         </div>
       )}
-      {pins && (
+      {pins.length > 0 && (
         <ol>
-          <li>
-            <b>1</b>Imagen: dirección de arte
-          </li>
-          <li>
-            <b>2</b>Copy: tono y llamado a la acción
-          </li>
-          <li>
-            <b>3</b>Hashtags: alcance orgánico
-          </li>
+          {pins.map((q, i) => (
+            <li key={q.id}>
+              <b>{i + 1}</b>
+              {q.text || "Sin texto"}
+            </li>
+          ))}
         </ol>
       )}
     </aside>

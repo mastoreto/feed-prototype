@@ -1,12 +1,20 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
 
+const pin = z.object({
+  id: z.string().max(64),
+  x: z.number().min(0).max(100),
+  y: z.number().min(0).max(100),
+  text: z.string().max(300),
+});
+
 const post = z.object({
   format: z.enum(["post", "carousel", "story", "reel", "doc"]),
   caption: z.string().max(3000),
   hashtags: z.string().max(500),
   notes: z.string().max(2000),
   media: z.array(z.string().max(900_000)).max(10), // ponytail: data URLs in DB; move to object storage if rows get heavy
+  pins: z.array(pin).max(12).default([]),
   scheduledAt: z.date().nullable(),
 });
 

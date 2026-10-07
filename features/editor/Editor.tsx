@@ -32,6 +32,7 @@ import { type ReactNode, useState } from "react";
 import { AdSlot } from "@/features/ads/AdSlot";
 import { ExportDialog } from "@/features/export/ExportDialog";
 import { bgOf, coverOf, SCENE_COUNT } from "@/features/platforms/media";
+import { PinLayer } from "@/features/platforms/PinLayer";
 import { hasSafeZones, Overview, Piece } from "@/features/platforms/render";
 import {
   FORMATS,
@@ -40,6 +41,7 @@ import {
   MAX_CAPTION,
   newPost,
   OVERVIEW,
+  type Pin,
   type Platform,
   type PostDraft,
   type Profile,
@@ -59,6 +61,14 @@ const toLocalInput = (d: Date | null) =>
         .slice(0, 16)
     : "";
 
+/** Width of the piece box in the editor; pins are positioned as percentages of it. */
+const pieceWidth = (platform: Platform, format: Format) =>
+  platform === "LINKEDIN"
+    ? "min(500px, 100%)"
+    : format === "story" || format === "reel"
+      ? "270px"
+      : "min(390px, 100%)";
+
 type Props = {
   platform: Platform;
   posts: PostDraft[];
@@ -73,6 +83,8 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
   const [sel, setSel] = useState(0);
   const [view, setView] = useState<View>("piece");
   const [safe, setSafe] = useState(true);
+  const [annotate, setAnnotate] = useState(false);
+  const [activePin, setActivePin] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("copy");
   const [sheetOpen, setSheetOpen] = useState(false); // mobile: collapsed by default so the piece stays visible
   const [exporting, setExporting] = useState(false);
@@ -129,6 +141,23 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
         : [srcs[0]],
     });
   }
+
+  const setPins = (pins: Pin[]) => patch({ pins });
+  const addPin = (x: number, y: number) => {
+    if (post.pins.length >= 12) return;
+    const id = crypto.randomUUID();
+    setPins([...post.pins, { id, x, y, text: "" }]);
+    setActivePin(id); // the bubble next to the pin takes the focus
+  };
+  const movePin = (id: string, x: number, y: number) =>
+    setPins(post.pins.map((q) => (q.id === id ? { ...q, x, y } : q)));
+  const selectPin = (id: string) => setActivePin(id);
+  const textPin = (id: string, text: string) =>
+    setPins(post.pins.map((q) => (q.id === id ? { ...q, text } : q)));
+  const removePin = (id: string) => {
+    setPins(post.pins.filter((q) => q.id !== id));
+    setActivePin(null);
+  };
 
   // Both wrappers reserve their height in CSS, so the unit mounting after hydration causes no layout shift.
   const barDesktop = (
@@ -237,6 +266,16 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
                     {OVERVIEW[platform].label}
                   </button>
                 </div>
+                {view === "piece" && (
+                  <button
+                    type="button"
+                    className="btn shrink-0 !min-h-11 md:!min-h-10"
+                    aria-pressed={annotate}
+                    onClick={() => setAnnotate(!annotate)}
+                  >
+                    {annotate ? "Listo" : "Anotar"}
+                  </button>
+                )}
                 {view === "piece" && hasSafeZones(platform, post.format) && (
                   <label className="chip shrink-0 cursor-pointer">
                     <input
@@ -257,12 +296,29 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
                   transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
                 >
                   {view === "piece" ? (
-                    <Piece
-                      platform={platform}
-                      post={post}
-                      profile={profile}
-                      safe={safe}
-                    />
+                    <div
+                      className="pinbox relative mx-auto max-w-full"
+                      style={{ width: pieceWidth(platform, post.format) }}
+                    >
+                      <Piece
+                        platform={platform}
+                        post={post}
+                        profile={profile}
+                        safe={safe}
+                      />
+                      <PinLayer
+                        pins={post.pins}
+                        interactive
+                        annotating={annotate}
+                        active={activePin}
+                        onAdd={addPin}
+                        onMove={movePin}
+                        onSelect={selectPin}
+                        onText={textPin}
+                        onRemove={removePin}
+                        onClose={() => setActivePin(null)}
+                      />
+                    </div>
                   ) : (
                     <Overview
                       platform={platform}
@@ -473,6 +529,80 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
                 "md:grid",
               )}
             >
+              <div className="grid gap-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="field-label">
+                    Notas sobre la pieza ({post.pins.length}/12)
+                  </span>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      className="btn min-h-11 px-3 md:min-h-9"
+                      disabled={post.pins.length >= 12}
+                      onClick={() => {
+                        setView("piece");
+                        addPin(50, 50); // keyboard/AT path: place at the centre, then move with the arrow keys
+                      }}
+                    >
+                      <Plus className="i" />
+                      Añadir nota
+                    </button>
+                    <button
+                      type="button"
+                      className="btn min-h-11 px-3 md:min-h-9"
+                      aria-pressed={annotate}
+                      onClick={() => {
+                        setAnnotate(!annotate);
+                        setView("piece");
+                      }}
+                    >
+                      {annotate ? "Listo" : "Tocar la pieza"}
+                    </button>
+                  </div>
+                </div>
+                {annotate && (
+                  <p className="text-[13px] text-ink2">
+                    Toca la pieza para colocar una nota. Arrastra un pin para
+                    moverlo.
+                  </p>
+                )}
+                <ul className="m-0 grid list-none gap-2 p-0">
+                  {post.pins.map((q, i) => (
+                    <li key={q.id} className="flex items-center gap-2">
+                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-red font-mono text-[11px] text-on-red">
+                        {i + 1}
+                      </span>
+                      <input
+                        className="field !min-h-11 md:!min-h-9"
+                        aria-label={`Nota ${i + 1}`}
+                        value={q.text}
+                        placeholder="Qué debe mirar el cliente aquí"
+                        maxLength={300}
+                        onFocus={() => setActivePin(q.id)}
+                        onChange={(e) =>
+                          setPins(
+                            post.pins.map((r) =>
+                              r.id === q.id
+                                ? { ...r, text: e.target.value }
+                                : r,
+                            ),
+                          )
+                        }
+                      />
+                      <button
+                        type="button"
+                        className="btn size-11 shrink-0 !p-0 md:size-9 md:!min-h-9"
+                        aria-label={`Quitar nota ${i + 1}`}
+                        onClick={() =>
+                          setPins(post.pins.filter((r) => r.id !== q.id))
+                        }
+                      >
+                        <X className="i" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <div className="grid gap-1">
                 <label className="field-label" htmlFor="notes">
                   Nota para el cliente

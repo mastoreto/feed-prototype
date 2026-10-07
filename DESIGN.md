@@ -205,7 +205,7 @@ Esquinas rectas en toda la interfaz (0 px): botones, campos, selectores, chips, 
 - **Móvil:** barra inferior fija sobre `--bar` con iconos de 22 px y etiqueta de 11 px; el activo lleva una línea roja superior de 3 px.
 
 ### Pines y notas (componente firma)
-Círculo de 24 px en rojo bolígrafo con número mono, anclado al borde izquierdo de la pieza, que remite a la lista numerada de la hoja ampliada. La nota para el cliente es una caja de borde y texto rojos, en cursiva, con rótulo mono.
+Círculo de 24 px en rojo bolígrafo con número mono. El usuario lo coloca tocando la pieza (posición en porcentaje de la pieza), lo arrastra o lo mueve con las flechas, y escribe su texto en una burbuja de borde rojo junto al pin; el pin activo lleva un doble anillo (blanco y rojo). Los pines viajan en la imagen exportada y la hoja ampliada los lista numerados. La nota general para el cliente es una caja de borde y texto rojos, en cursiva, con rótulo mono.
 
 ### Espacio de anuncio
 Caja de borde fino con trama diagonal, etiqueta "PUBLICIDAD" en mono sobre tinta atenuada, tamaño reservado (728×90, 320×50, 300×250 o 336×280). Nunca dentro del lienzo ni de la imagen exportada.

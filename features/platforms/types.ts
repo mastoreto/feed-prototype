@@ -3,6 +3,9 @@ export type Format = "post" | "carousel" | "story" | "reel" | "doc";
 /** What the canvas shows: one piece, or the whole campaign laid out (profile grid / timeline). */
 export type View = "piece" | "overview";
 
+/** A red-pen note anchored on the piece; x/y are percentages of the piece box. */
+export type Pin = { id: string; x: number; y: number; text: string };
+
 export type PostDraft = {
   id: string;
   format: Format;
@@ -11,6 +14,7 @@ export type PostDraft = {
   notes: string;
   /** "art:N" placeholder ids or resized JPEG data URLs */
   media: string[];
+  pins: Pin[];
   scheduledAt: Date | null;
 };
 
@@ -76,6 +80,7 @@ export function newPost(n = 0): PostDraft {
     hashtags: "",
     notes: "",
     media: [`art:${n % 6}`],
+    pins: [],
     scheduledAt: null,
   };
 }

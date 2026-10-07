@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteFooter } from "@/components/SiteFooter";
 import { AdSlot } from "@/features/ads/AdSlot";
 import { Sheet } from "@/features/export/Sheet";
+import { PinLayer } from "@/features/platforms/PinLayer";
 import { Piece } from "@/features/platforms/render";
 import { samplePosts, sampleProfile } from "@/features/platforms/sample";
 
@@ -94,24 +95,16 @@ export default function Home() {
         aria-label="Ejemplo"
       >
         <div className="rule flex flex-wrap items-start justify-center gap-[clamp(18px,3vw,40px)] bg-paper p-[clamp(18px,3vw,40px)]">
-          <div className="relative w-[min(320px,100%)] max-md:pl-3">
+          <div className="pinbox relative w-[min(320px,100%)]">
             <Piece platform="INSTAGRAM" post={post} profile={sampleProfile} />
-            <span className="pin" style={{ top: "34%" }}>
-              1
-            </span>
-            <span className="pin" style={{ top: "80%" }}>
-              2
-            </span>
-            <span className="pin" style={{ top: "89%" }}>
-              3
-            </span>
+            <PinLayer pins={post.pins} />
           </div>
           <div className="w-[min(300px,100%)] [&_.sheet]:w-full">
             <Sheet
               platform="INSTAGRAM"
               post={post}
               profile={sampleProfile}
-              pins
+              pins={post.pins}
             />
           </div>
         </div>

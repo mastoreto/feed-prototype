@@ -301,7 +301,7 @@ button {
   }
   .pin {
     position: absolute;
-    left: -12px;
+    transform: translate(-50%, -50%);
     z-index: 3;
     width: 24px;
     height: 24px;
@@ -313,6 +313,27 @@ button {
       monospace;
     display: grid;
     place-items: center;
+  }
+  .pin-edit {
+    pointer-events: auto;
+    touch-action: none;
+    cursor: grab;
+    border: 0;
+  }
+  .pin-edit::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+  }
+  .pin-edit[aria-current="true"] {
+    box-shadow:
+      0 0 0 3px #fff,
+      0 0 0 5px var(--red);
+  }
+  .btn[aria-pressed="true"] {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--on-red);
   }
   .sheet {
     background: #fff;
@@ -467,4 +488,12 @@ button {
   color: #fff;
   background: #2b3bff;
   flex: none;
+}
+
+/* Piece boxes that carry pins have an explicit width; the skeleton fills it. */
+.pinbox > .ig,
+.pinbox > .li,
+.pinbox > .tall {
+  width: 100%;
+  max-width: none;
 }

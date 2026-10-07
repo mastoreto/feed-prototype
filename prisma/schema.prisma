@@ -111,6 +111,8 @@ model Post {
   notes       String    @default("")
   // "art:N" placeholder ids or resized JPEG data URLs (see features/editor/images.ts)
   media       String[]
+  // red-pen notes placed on the piece: [{ id, x, y (percent 0-100), text }]
+  pins        Json      @default("[]")
   scheduledAt DateTime?
 
   @@index([campaignId, order])
