@@ -249,7 +249,8 @@
   z-index: 1;
 }
 .tall {
-  width: min(270px, 100%);
+  width: 270px;
+  max-width: 100%;
   aspect-ratio: 9 / 16;
   position: relative;
   border-radius: 18px;

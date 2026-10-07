@@ -86,13 +86,13 @@ export default function TryPage() {
             </div>
             <input
               aria-label="Nombre del cliente"
-              className="field min-w-0 flex-1 !min-h-9 !py-1 md:max-w-40 md:flex-none"
+              className="field min-w-32 flex-1 !min-h-9 !py-1 md:max-w-40 md:flex-none"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <input
               aria-label="Usuario"
-              className="field min-w-0 flex-1 !min-h-9 !py-1 md:max-w-32 md:flex-none"
+              className="field min-w-32 flex-1 !min-h-9 !py-1 md:max-w-32 md:flex-none"
               value={handle}
               onChange={(e) => setHandle(e.target.value.replace(/^@/, ""))}
             />

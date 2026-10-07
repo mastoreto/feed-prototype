@@ -16,6 +16,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
@@ -239,21 +240,29 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
                 )}
               </div>
               <div className="stage grid w-full justify-items-center md:block md:w-auto">
-                {view === "piece" ? (
-                  <Piece
-                    platform={platform}
-                    post={post}
-                    profile={profile}
-                    safe={safe}
-                  />
-                ) : (
-                  <Overview
-                    platform={platform}
-                    posts={posts}
-                    profile={profile}
-                    selected={index}
-                  />
-                )}
+                <motion.div
+                  key={`${view}-${post.id}-${post.format}`}
+                  className="grid w-full justify-items-center md:block md:w-auto"
+                  initial={{ opacity: 0, scale: 0.985, filter: "blur(2px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
+                >
+                  {view === "piece" ? (
+                    <Piece
+                      platform={platform}
+                      post={post}
+                      profile={profile}
+                      safe={safe}
+                    />
+                  ) : (
+                    <Overview
+                      platform={platform}
+                      posts={posts}
+                      profile={profile}
+                      selected={index}
+                    />
+                  )}
+                </motion.div>
                 <i className="c1" />
                 <i className="c2" />
                 <span className="lab absolute -bottom-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap text-ink2 md:block">

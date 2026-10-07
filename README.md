@@ -16,6 +16,10 @@ bun run dev
 
 Rutas: `/` landing · `/try` editor sin cuenta (borrador en localStorage) · `/login` `/signup` · `/dashboard` · `/clients/[id]` · `/campaigns/[id]` · `/guias` `/privacidad` `/terminos` · `/ads.txt`.
 
+## Verificar
+
+`bun run lint` · `bun run typecheck` · `bun run build`. Con el servidor de producción y la base Docker arriba, `bun run e2e` comprueba registro, CRUD, guardado y que un usuario no accede a datos de otro.
+
 ## Estructura
 
 - `features/platforms` — un único `PostDraft`; cada red es un renderer (`render.tsx`) + entrada en `types.ts`. Añadir una red = renderers nuevos y sus formatos.
@@ -30,5 +34,5 @@ Define `NEXT_PUBLIC_ADSENSE_CLIENT` y los `NEXT_PUBLIC_ADSENSE_SLOT_*`. Sin ello
 ## Limitaciones conocidas
 
 - Las imágenes subidas se reducen a JPEG (máx. 1350 px) y se guardan como data URL en Postgres. Si las filas pesan mucho, pasar a almacenamiento de objetos.
-- El autoguardado no se vacía al cerrar la pestaña (debounce de 900 ms).
+- El autoguardado se vacía al cambiar de pestaña, pero un cierre brusco puede perder los últimos 900 ms.
 - Los textos legales son genéricos: revísalos antes de publicar.

@@ -2,7 +2,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Editor } from "@/features/editor/Editor";
 import {
   type Format,
@@ -65,21 +65,38 @@ function CampaignEditor({ campaign }: { campaign: Loaded }) {
     }),
   );
 
-  // Debounced autosave. ponytail: no flush on tab close; add a beforeunload/sendBeacon flush if edits get lost in practice.
+  // Debounced autosave, flushed immediately when the tab is hidden (tab switch, app switch).
+  // ponytail: a hard tab close can still lose the last 900 ms; add a keepalive request if it matters.
+  const latest = useRef({ posts, name });
+  latest.current = { posts, name };
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const pending = useRef(false);
+  const flush = useCallback(() => {
+    clearTimeout(timer.current);
+    pending.current = false;
+    const { posts, name } = latest.current;
+    saveNow({
+      id: campaign.id,
+      name: name.trim() || campaign.name,
+      posts: posts.map(({ id: _id, ...p }) => p),
+    });
+  }, [saveNow, campaign.id, campaign.name]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: posts/name changes are the trigger; values are read via `latest`
   useEffect(() => {
     if (!dirty.current) return;
     setStatus("saving");
-    const t = setTimeout(
-      () =>
-        saveNow({
-          id: campaign.id,
-          name: name.trim() || campaign.name,
-          posts: posts.map(({ id: _id, ...p }) => p),
-        }),
-      900,
-    );
-    return () => clearTimeout(t);
-  }, [posts, name, campaign.id, campaign.name, saveNow]);
+    pending.current = true;
+    timer.current = setTimeout(flush, 900);
+    return () => clearTimeout(timer.current);
+  }, [posts, name, flush]);
+
+  useEffect(() => {
+    const onHide = () =>
+      document.visibilityState === "hidden" && pending.current && flush();
+    document.addEventListener("visibilitychange", onHide);
+    return () => document.removeEventListener("visibilitychange", onHide);
+  }, [flush]);
 
   return (
     <div className="min-h-dvh bg-paper">

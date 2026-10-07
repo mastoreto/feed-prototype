@@ -315,7 +315,12 @@ const LiHead = ({ pr }: { pr: Profile }) => (
         2 h ·{" "}
         <Globe
           className="i"
-          style={{ width: 12, height: 12, verticalAlign: -2 }}
+          style={{
+            width: 12,
+            height: 12,
+            verticalAlign: -2,
+            display: "inline-block",
+          }}
         />
       </small>
     </div>
