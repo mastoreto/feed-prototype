@@ -16,6 +16,12 @@ bun run dev
 
 Rutas: `/` landing · `/try` editor sin cuenta (borrador en localStorage) · `/login` `/signup` · `/dashboard` · `/clients/[id]` · `/campaigns/[id]` · `/guias` `/privacidad` `/terminos` · `/ads.txt`.
 
+## Producción
+
+Variables obligatorias: `STORAGE_DATABASE_URL`, `BETTER_AUTH_SECRET` y `BETTER_AUTH_URL` (la URL pública real). Si el proveedor ofrece una conexión directa (`STORAGE_DATABASE_URL_UNPOOLED`), las migraciones la usan.
+
+**Las migraciones deben aplicarse a la base de producción.** En Vercel lo hace el script `vercel-build` (`prisma migrate deploy && next build`) en cada despliegue. En otro proveedor, usa ese mismo comando como build o ejecuta `bunx prisma migrate deploy` con la URL de producción antes de arrancar. Sin ellas, el registro falla con «The table `public.User` does not exist». Si los despliegues de vista previa comparten la base de producción, restringe `vercel-build` a producción o usa una base aparte.
+
 ## Notas sobre la pieza
 
 En el editor, «Anotar» (o «Añadir nota» con teclado) coloca pines rojos sobre la pieza con su texto. Se guardan por publicación (`Post.pins`, porcentajes de la pieza) y se exportan en la imagen junto a la lista numerada de la hoja ampliada.

@@ -4,6 +4,22 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 
+/** Map Better Auth failures to something the user can act on. A 5xx is ours, not theirs. */
+function authMessage(e: { status: number; code?: string }, signup: boolean) {
+  if (e.status >= 500)
+    return "El servicio no está disponible en este momento. Inténtalo de nuevo en unos minutos.";
+  if (e.status === 403)
+    return "No pudimos validar el origen de la solicitud. Recarga la página e inténtalo de nuevo.";
+  if (e.code?.startsWith("USER_ALREADY_EXISTS"))
+    return "Ya existe una cuenta con ese correo. Entra con ella.";
+  if (e.code === "PASSWORD_TOO_SHORT")
+    return "La contraseña debe tener al menos 8 caracteres.";
+  if (e.code === "INVALID_EMAIL") return "Revisa el correo: no parece válido.";
+  return signup
+    ? "No pudimos crear la cuenta. Revisa los datos e inténtalo de nuevo."
+    : "Correo o contraseña incorrectos.";
+}
+
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -25,12 +41,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         })
       : await authClient.signIn.email({ email, password });
     setPending(false);
-    if (error)
-      return setError(
-        signup
-          ? "No pudimos crear la cuenta. Revisa los datos o prueba con otro correo."
-          : "Correo o contraseña incorrectos.",
-      );
+    if (error) return setError(authMessage(error, signup));
     router.push("/dashboard");
   }
 

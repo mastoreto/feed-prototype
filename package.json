@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit",
     "db:up": "docker compose up -d --wait db",
     "db:down": "docker compose down",
-    "e2e": "bun run scripts/e2e.ts"
+    "e2e": "bun run scripts/e2e.ts",
+    "vercel-build": "prisma migrate deploy && next build"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
