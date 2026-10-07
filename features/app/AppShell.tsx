@@ -23,7 +23,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-dvh flex-col md:grid md:grid-cols-[200px_minmax(0,1fr)]">
       <nav
         aria-label="Principal"
-        className="order-2 sticky bottom-0 z-20 flex justify-around bg-ink pb-[env(safe-area-inset-bottom)] text-paper md:order-1 md:static md:flex-col md:justify-start md:gap-0.5 md:py-4"
+        className="order-2 sticky bottom-0 z-20 flex justify-around bg-bar pb-[env(safe-area-inset-bottom)] text-on-bar md:order-1 md:static md:flex-col md:justify-start md:gap-0.5 md:py-4"
       >
         <Link
           href="/"
@@ -58,7 +58,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
         {data?.user && (
           <div
-            className="hidden truncate border-t border-paper/25 px-[18px] py-3.5 text-[13px] md:block"
+            className="hidden truncate border-t border-on-bar/25 px-[18px] py-3.5 text-[13px] md:block"
             title={data.user.email}
           >
             {data.user.name}

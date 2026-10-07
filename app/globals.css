@@ -13,6 +13,8 @@
   --red: #c8310a;
   --on-red: #ffffff;
   --scrim: rgba(43, 59, 255, 0.9);
+  --bar: #0a0c14; /* title bars, nav rail, footer: always darker than the page */
+  --on-bar: #ffffff;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 @media (prefers-color-scheme: dark) {
@@ -27,6 +29,8 @@
     --red: #ff6a3d;
     --on-red: #1a0600;
     --scrim: rgba(6, 8, 32, 0.9);
+    --bar: #03040a;
+    --on-bar: #eef0f8;
     color-scheme: dark;
   }
 }
@@ -40,6 +44,8 @@
   --color-brand: var(--blue);
   --color-on-brand: var(--on-blue);
   --color-red: var(--red);
+  --color-bar: var(--bar);
+  --color-on-bar: var(--on-bar);
   --color-on-red: var(--on-red);
   --font-sans: var(--font-archivo), system-ui, sans-serif;
   --font-mono: var(--font-dm-mono), ui-monospace, monospace;
@@ -56,9 +62,11 @@ body {
   background: var(--blue);
   color: var(--on-blue);
 }
-:focus-visible {
-  outline: 3px solid var(--blue);
-  outline-offset: 2px;
+@layer base {
+  :focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 2px;
+  }
 }
 button {
   cursor: pointer;

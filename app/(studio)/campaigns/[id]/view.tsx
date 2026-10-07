@@ -100,7 +100,7 @@ function CampaignEditor({ campaign }: { campaign: Loaded }) {
 
   return (
     <div className="min-h-dvh bg-paper">
-      <header className="flex items-center gap-4 bg-ink px-4 py-2.5 text-paper">
+      <header className="flex items-center gap-4 bg-bar px-4 py-2.5 text-on-bar">
         <Link
           href={`/clients/${campaign.client.id}`}
           className="flex min-h-11 items-center gap-1 text-sm font-semibold"
