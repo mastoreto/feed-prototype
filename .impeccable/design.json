@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T02:32:38+00:00",
+  "title": "Design System: Feed Prototype",
+  "extensions": {
+    "colorMeta": {
+      "cobalt": {
+        "role": "primary",
+        "displayName": "Cobalto de imprenta",
+        "canonical": "oklch(50% 0.279 268)",
+        "tonalRamp": [
+          "#020036",
+          "#0d007c",
+          "#1c00cd",
+          "#2d41fe",
+          "#577dfe",
+          "#8caafe",
+          "#bed0fe",
+          "#e8eefe"
+        ]
+      },
+      "red-pen": {
+        "role": "secondary",
+        "displayName": "Rojo bolígrafo",
+        "canonical": "oklch(55% 0.192 34)",
+        "tonalRamp": [
+          "#200000",
+          "#4c0800",
+          "#801800",
+          "#b82800",
+          "#e64f2e",
+          "#ff866b",
+          "#ffc0b0",
+          "#fee9e4"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "oklch(16% 0.017 273)",
+        "tonalRamp": [
+          "#090b13",
+          "#24262f",
+          "#42454f",
+          "#636670",
+          "#858994",
+          "#aaadb9",
+          "#cdd0dd",
+          "#eaeefb"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Tinta atenuada",
+        "canonical": "oklch(43% 0.032 271)",
+        "tonalRamp": [
+          "#070a19",
+          "#212636",
+          "#3e4457",
+          "#5f6579",
+          "#82889d",
+          "#a6adc3",
+          "#c9d0e7",
+          "#e9eefe"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Línea fina",
+        "canonical": "oklch(84% 0.017 271)",
+        "tonalRamp": [
+          "#080b13",
+          "#23262f",
+          "#41454f",
+          "#626670",
+          "#858994",
+          "#aaaeb9",
+          "#cdd1dd",
+          "#eaeefb"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papel",
+        "canonical": "oklch(100% 0.000 90)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#262626",
+          "#454545",
+          "#666666",
+          "#898989",
+          "#aeaeae",
+          "#d1d1d1",
+          "#eeeeee"
+        ]
+      },
+      "desk": {
+        "role": "neutral",
+        "displayName": "Mesa",
+        "canonical": "oklch(94% 0.008 271)",
+        "tonalRamp": [
+          "#0a0b0f",
+          "#25262b",
+          "#43454a",
+          "#64666b",
+          "#87898e",
+          "#acaeb3",
+          "#cfd1d7",
+          "#eceef4"
+        ]
+      },
+      "bar": {
+        "role": "neutral",
+        "displayName": "Barra",
+        "canonical": "oklch(16% 0.017 273)",
+        "tonalRamp": [
+          "#090b13",
+          "#24262f",
+          "#42454f",
+          "#636670",
+          "#858994",
+          "#aaadb9",
+          "#cdd0dd",
+          "#eaeefb"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titulares de hero y errores, mayúsculas extendidas (ancho 118)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos de sección y de página."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Nombres de cliente, campaña y pasos."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido, 60–72ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Rótulos, medidas, estados y contadores en DM Mono."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-float",
+        "value": "0 -12px 24px -16px rgba(0,0,0,.45)",
+        "purpose": "Inspector móvil sobre el lienzo."
+      },
+      {
+        "name": "network-sim",
+        "value": "0 1px 3px rgba(0,0,0,.18), 0 10px 28px -12px rgba(0,0,0,.28)",
+        "purpose": "Solo dentro de las piezas simuladas de red."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entradas, presión de botones y transición del lienzo (150–260 ms)."
+      },
+      {
+        "name": "press",
+        "value": "transform: scale(0.97) · 160ms",
+        "purpose": "Feedback al presionar cualquier control."
+      },
+      {
+        "name": "canvas-swap",
+        "value": "opacity 0→1, scale .985→1, blur 2px→0 · 180ms",
+        "purpose": "Cambio de pieza o de formato en el lienzo."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "sheet-collapse",
+        "value": "720px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal: exportar, crear, entrar.",
+      "html": "<button class=\"ds-btn-primary\">Exportar</button>",
+      "css": ".ds-btn-primary{font-family:Archivo,system-ui,sans-serif;font-weight:600;font-size:15px;min-height:44px;padding:10px 16px;border:1.5px solid #0a0c14;background:transparent;color:#0a0c14;cursor:pointer;transition:background-color 150ms ease,color 150ms ease,transform 160ms cubic-bezier(.23,1,.32,1);background:#2b3bff;color:#fff;border-color:#2b3bff}.ds-btn-primary:hover{background:#0a0c14;border-color:#0a0c14}.ds-btn-primary:active{transform:scale(.97)}.ds-btn-primary:focus-visible{outline:3px solid #2b3bff;outline-offset:2px}"
+    },
+    {
+      "name": "Default Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "Acción secundaria con borde de tinta; se invierte al pasar el cursor.",
+      "html": "<button class=\"ds-btn\">Añadir</button>",
+      "css": ".ds-btn{font-family:Archivo,system-ui,sans-serif;font-weight:600;font-size:15px;min-height:44px;padding:10px 16px;border:1.5px solid #0a0c14;background:transparent;color:#0a0c14;cursor:pointer;transition:background-color 150ms ease,color 150ms ease,transform 160ms cubic-bezier(.23,1,.32,1)}.ds-btn:hover{background:#0a0c14;color:#fff}.ds-btn:active{transform:scale(.97)}.ds-btn:focus-visible{outline:3px solid #2b3bff;outline-offset:2px}"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "custom",
+      "refersTo": "segmented-active",
+      "description": "Selector de red, formato o escala; el activo se rellena de tinta.",
+      "html": "<div class=\"ds-seg\"><button aria-pressed=\"true\">Post</button><button aria-pressed=\"false\">Carrusel</button><button aria-pressed=\"false\">Historia</button></div>",
+      "css": ".ds-seg{display:inline-flex;border:1.5px solid #0a0c14}.ds-seg button{font:600 15px Archivo,system-ui,sans-serif;min-height:44px;padding:6px 13px;border:0;background:transparent;color:#0a0c14;cursor:pointer}.ds-seg button+button{border-left:1.5px solid #0a0c14}.ds-seg button[aria-pressed=true]{background:#0a0c14;color:#fff}.ds-seg button:focus-visible{outline:3px solid #2b3bff;outline-offset:-3px}"
+    },
+    {
+      "name": "Underline Field",
+      "kind": "input",
+      "refersTo": "button-default",
+      "description": "Campo de una línea con rótulo mono; el foco pasa a cobalto.",
+      "html": "<label class=\"ds-field\"><span>Nombre</span><input value=\"Café Almanaque\"></label>",
+      "css": ".ds-field{display:grid;gap:4px;font-family:Archivo,system-ui,sans-serif}.ds-field span{font:500 11px 'DM Mono',ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase;color:#4a5063}.ds-field input{font:400 16px Archivo,system-ui,sans-serif;min-height:44px;padding:8px 0;border:0;border-bottom:1.5px solid #0a0c14;background:transparent;color:#0a0c14;caret-color:#c8310a;border-radius:0}.ds-field input:focus-visible{outline:0;border-bottom-color:#2b3bff;box-shadow:0 2px 0 #2b3bff}"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Etiqueta mono de estado o red.",
+      "html": "<span class=\"ds-chip\">Instagram</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;padding:1px 8px;border:1px solid #0a0c14;font:500 10.5px 'DM Mono',ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:#0a0c14;background:#fff}"
+    },
+    {
+      "name": "Red-Pen Pin and Note",
+      "kind": "custom",
+      "refersTo": "pin",
+      "description": "Firma del producto: pin numerado y nota para el cliente en rojo bolígrafo.",
+      "html": "<div class=\"ds-note\"><span class=\"ds-pin\">1</span><h5>Nota para el cliente</h5><p>Primera pieza de la campaña. Mostramos el producto en taza antes que en bolsa.</p></div>",
+      "css": ".ds-note{position:relative;margin-left:12px;padding:10px 12px;border:1.5px solid #c8310a;color:#c8310a;font-family:Archivo,system-ui,sans-serif;font-size:12.5px;max-width:260px}.ds-pin{position:absolute;left:-24px;top:-12px;width:24px;height:24px;border-radius:50%;background:#c8310a;color:#fff;font:500 11px 'DM Mono',ui-monospace,monospace;display:grid;place-items:center}.ds-note h5{margin:0 0 3px;font:500 10.5px 'DM Mono',ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase}.ds-note p{margin:0;font-style:italic}"
+    },
+    {
+      "name": "Ad Slot",
+      "kind": "custom",
+      "refersTo": "chip",
+      "description": "Espacio de AdSense con tamaño reservado y etiqueta visible.",
+      "html": "<div class=\"ds-ad\"><span>Publicidad</span><i>AdSense · 300×250</i></div>",
+      "css": ".ds-ad{position:relative;display:grid;place-items:center;width:300px;max-width:100%;height:250px;border:1px solid #4a5063;background:repeating-linear-gradient(135deg,transparent 0 9px,#c6cad6 9px 10px);color:#4a5063}.ds-ad span{position:absolute;top:0;left:0;padding:1px 7px;background:#4a5063;color:#fff;font:500 10px 'DM Mono',ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase}.ds-ad i{font:10px 'DM Mono',ui-monospace,monospace;font-style:normal}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La hoja de pruebas",
+    "overview": "Feed Prototype se ve como una prueba de imprenta que un diseñador revisa con el cliente: papel blanco sobre una mesa gris azulada, reglas negras de 1,5 px que ordenan la información, esquinas rectas, un único campo de cobalto y anotaciones en bolígrafo rojo. Las redes sociales simuladas son lo único que imita a otro producto; todo lo demás habla con esta voz de imprenta.",
+    "keyCharacteristics": [
+      "Reglas de tinta de 1,5 px en lugar de tarjetas, sombras o fondos de color.",
+      "Esquinas rectas; el círculo se reserva a avatares y pines numerados.",
+      "Titulares en mayúsculas extendidas (ancho 118) con tracking negativo.",
+      "Un solo campo de cobalto por pantalla; el rojo solo para anotaciones.",
+      "Modo claro y oscuro con los mismos roles; las barras siempre más oscuras que la página."
+    ],
+    "rules": [
+      {
+        "name": "The One Cobalt Field Rule",
+        "body": "Cada pantalla tiene como mucho un campo grande de cobalto. Los botones primarios son la excepción, no un segundo campo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red Pen Rule",
+        "body": "El rojo solo anota: pines, notas para el cliente, errores y acciones destructivas. Nunca decora ni rellena superficies.",
+        "section": "colors"
+      },
+      {
+        "name": "The Bar Rule",
+        "body": "Las barras usan --bar, no --ink. En oscuro, --ink es casi blanco y una barra hecha con él se invierte en un bloque claro.",
+        "section": "colors"
+      },
+      {
+        "name": "The Extended Caps Rule",
+        "body": "Solo h1 y h2 van en mayúsculas extendidas. Títulos menores y cuerpo mantienen mayúsculas y minúsculas para leerse.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono Is Measurement Rule",
+        "body": "DM Mono es para medidas, contadores, estados y etiquetas. Nunca para texto corrido ni como disfraz de lo técnico.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Ningún componente de la interfaz lleva sombra en reposo. Si necesita separarse, usa una regla o un cambio de superficie.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Corners Rule",
+        "body": "Ningún border-radius en la interfaz propia. Los redondeos pertenecen a las redes simuladas.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do separar con reglas de tinta de 1,5 px antes de recurrir a tarjetas, fondos o sombras.",
+      "Do mantener todo objetivo táctil en 44×44 px como mínimo en móvil.",
+      "Do usar --bar para barras, nunca --ink, para que funcionen en claro y oscuro.",
+      "Do reservar la altura de cada espacio de anuncio en CSS.",
+      "Do dejar que el rojo bolígrafo señale solo lo que el cliente debe mirar o corregir.",
+      "Do mover el lienzo con una transición de 180 ms (opacidad, escala 0,985, desenfoque 2 px) y respetar prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't añadir border-radius a botones, campos, chips ni diálogos propios.",
+      "Don't usar degradados, sombras en reposo ni tarjetas anidadas en la interfaz.",
+      "Don't poner un segundo campo grande de cobalto en la misma pantalla.",
+      "Don't usar rojo para decorar ni para rellenar superficies.",
+      "Don't usar mayúsculas extendidas fuera de h1 y h2.",
+      "Don't colocar anuncios sobre el lienzo, en el diálogo de exportación ni en la imagen descargada.",
+      "Don't reproducir logotipos de Instagram o LinkedIn: las redes simuladas copian la estructura con iconos genéricos."
+    ]
+  }
+}
