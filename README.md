@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Feed Prototype
 
-## Getting Started
+Simula feeds de Instagram y LinkedIn con las piezas de un cliente y descarga la imagen (pieza, feed, historia, reel) con una hoja de notas para propuestas comerciales. Gratis, con AdSense discreto y muro de bloqueadores.
 
-First, run the development server:
+Stack: Next 16 (App Router, Cache Components) · Tailwind 4 · tRPC 11 + TanStack Query · Prisma 7 + Postgres · Better Auth · framer-motion · dnd-kit · html-to-image.
+
+## Arrancar
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env            # DATABASE_URL, BETTER_AUTH_SECRET…
+docker run -d --name feedproto-pg -e POSTGRES_PASSWORD=feed -e POSTGRES_DB=feedprototype -p 54329:5432 postgres:17-alpine
+bun install                     # genera el cliente de Prisma
+bun run db:migrate
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Rutas: `/` landing · `/try` editor sin cuenta (borrador en localStorage) · `/login` `/signup` · `/dashboard` · `/clients/[id]` · `/campaigns/[id]` · `/guias` `/privacidad` `/terminos` · `/ads.txt`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `features/platforms` — un único `PostDraft`; cada red es un renderer (`render.tsx`) + entrada en `types.ts`. Añadir una red = renderers nuevos y sus formatos.
+- `features/editor` — editor (lista con dnd-kit, lienzo, inspector). `features/export` — hoja ampliada y PNG.
+- `features/ads` — `AdSlot`, `AdBlockGate`. Los anuncios nunca están dentro de la superficie exportada.
+- `server/routers` — tRPC; toda consulta filtra por el usuario dueño. `proxy.ts` solo hace una comprobación optimista de la cookie.
 
-## Learn More
+## AdSense
 
-To learn more about Next.js, take a look at the following resources:
+Define `NEXT_PUBLIC_ADSENSE_CLIENT` y los `NEXT_PUBLIC_ADSENSE_SLOT_*`. Sin ellos se muestran marcadores y el muro no se activa. El muro está activo en producción cuando hay `CLIENT`; fuérzalo en desarrollo con `NEXT_PUBLIC_ADBLOCK_GATE=on`. Funciona solo en el cliente, por lo que un usuario decidido puede saltárselo.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Limitaciones conocidas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Las imágenes subidas se reducen a JPEG (máx. 1350 px) y se guardan como data URL en Postgres. Si las filas pesan mucho, pasar a almacenamiento de objetos.
+- El autoguardado no se vacía al cerrar la pestaña (debounce de 900 ms).
+- Los textos legales son genéricos: revísalos antes de publicar.
