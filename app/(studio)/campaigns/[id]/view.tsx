@@ -103,7 +103,7 @@ function CampaignEditor({ campaign }: { campaign: Loaded }) {
       <header className="flex items-center gap-4 bg-ink px-4 py-2.5 text-paper">
         <Link
           href={`/clients/${campaign.client.id}`}
-          className="flex items-center gap-1 text-sm font-semibold"
+          className="flex min-h-11 items-center gap-1 text-sm font-semibold"
         >
           <ChevronLeft className="i" />
           {campaign.client.name}
@@ -133,7 +133,7 @@ function CampaignEditor({ campaign }: { campaign: Loaded }) {
             <input
               aria-label="Nombre de la campaña"
               maxLength={80}
-              className="field max-w-72 !min-h-9 !py-1 text-lg font-bold"
+              className="field max-w-72 !min-h-11 !py-1 md:!min-h-9 text-lg font-bold"
               value={name}
               onChange={(e) => {
                 dirty.current = true;

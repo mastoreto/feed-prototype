@@ -318,22 +318,24 @@ export function ExportDialog({
               ))}
             </div>
           </div>
-          <button
-            type="button"
-            className="btn btn-pri btn-lg sticky bottom-0"
-            onClick={download}
-            disabled={!!busy}
-          >
-            <Download className="i" />{" "}
-            {busy ?? (
-              <>
-                Descargar PNG ·{" "}
-                <span className="font-mono text-[12.5px]">
-                  {size[0] * scale}×{size[1] * scale}
-                </span>
-              </>
-            )}
-          </button>
+          <div className="rule-t sticky bottom-0 z-10 -mx-4 bg-paper px-4 py-3 md:static md:mx-0 md:border-0 md:p-0">
+            <button
+              type="button"
+              className="btn btn-pri btn-lg w-full"
+              onClick={download}
+              disabled={!!busy}
+            >
+              <Download className="i" />{" "}
+              {busy ?? (
+                <>
+                  Descargar PNG ·{" "}
+                  <span className="font-mono text-[12.5px]">
+                    {size[0] * scale}×{size[1] * scale}
+                  </span>
+                </>
+              )}
+            </button>
+          </div>
           <p className="flex gap-2 text-[12.5px] text-ink2">
             <ShieldCheck className="i" />
             La imagen no incluye anuncios ni datos de tu cuenta.

@@ -65,7 +65,7 @@ export default function DashboardPage() {
             </p>
           )}
           {clients.data?.length === 0 && !adding && (
-            <div className="rule grid gap-3 p-6">
+            <div className="grid gap-3 border-[1.5px] border-dashed border-ink p-6">
               <h2 className="text-xl font-bold">Crea tu primer cliente</h2>
               <p className="max-w-[48ch] text-ink2">
                 Un cliente agrupa sus campañas. Después elige la red y monta las

@@ -35,12 +35,15 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   }
 
   return (
-    <div className="grid min-h-dvh md:grid-cols-2">
+    <div className="grid min-h-dvh bg-paper md:grid-cols-2">
       <form
         onSubmit={submit}
         className="mx-auto grid w-full max-w-[480px] content-center gap-4 px-4 py-8 md:px-16"
       >
-        <Link href="/" className="disp text-sm [font-stretch:125%]">
+        <Link
+          href="/"
+          className="disp inline-flex min-h-11 items-center text-sm [font-stretch:125%]"
+        >
           Feed Prototype
         </Link>
         <h1 className="disp text-[clamp(30px,4vw,44px)]">
@@ -119,7 +122,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           {signup ? "¿Ya tienes cuenta? " : "¿Sin cuenta? "}
           <Link
             href={signup ? "/login" : "/signup"}
-            className="font-semibold text-brand underline underline-offset-4"
+            className="inline-block py-3 font-semibold text-brand underline underline-offset-4"
           >
             {signup ? "Entrar" : "Crear cuenta gratis"}
           </Link>

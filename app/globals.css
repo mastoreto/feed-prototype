@@ -10,7 +10,7 @@
   --hair: #c6cad6;
   --blue: #2b3bff;
   --on-blue: #ffffff;
-  --red: #f23f12;
+  --red: #c8310a;
   --on-red: #ffffff;
   --scrim: rgba(43, 59, 255, 0.9);
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -150,7 +150,7 @@ button {
   .seg > button {
     padding: 0.4rem 0.8rem;
     font-weight: 600;
-    min-height: 40px;
+    min-height: 44px;
     white-space: nowrap;
     transition:
       background-color 150ms ease,
@@ -217,7 +217,7 @@ button {
   }
   .field::placeholder {
     color: var(--ink2);
-    opacity: 0.75;
+    opacity: 0.85;
   }
   .ad-box {
     position: relative;
@@ -367,14 +367,14 @@ button {
     padding: 0 6px;
   }
   .sheet .note {
-    color: #d3330c;
-    border: 1.5px solid #d3330c;
+    color: #c8310a;
+    border: 1.5px solid #c8310a;
     padding: 10px 12px;
     display: grid;
     gap: 3px;
   }
   .sheet .note h5 {
-    color: #d3330c;
+    color: #c8310a;
   }
   .sheet .note p {
     font-style: italic;
@@ -396,7 +396,7 @@ button {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #f23f12;
+    background: #c8310a;
     color: #fff;
     font:
       500 10px var(--font-dm-mono),

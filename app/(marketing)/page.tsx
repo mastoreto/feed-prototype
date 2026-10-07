@@ -58,12 +58,15 @@ export default function Home() {
           <span className="disp mr-auto text-sm [font-stretch:125%]">
             Feed Prototype
           </span>
-          <Link href="/guias" className="hidden font-medium sm:block">
+          <Link
+            href="/guias"
+            className="hidden min-h-11 items-center px-2.5 font-medium sm:flex"
+          >
             Guías
           </Link>
           <Link
             href="/login"
-            className="border-[1.5px] border-current px-3.5 py-1.5 font-semibold"
+            className="inline-flex min-h-11 items-center border-[1.5px] border-current px-3.5 font-semibold"
           >
             Entrar
           </Link>
@@ -195,7 +198,7 @@ export default function Home() {
             key={q}
             className={`rule-t py-3.5 ${i === FAQ.length - 1 ? "rule-b" : ""}`}
           >
-            <summary className="cursor-pointer text-lg font-bold [font-stretch:108%]">
+            <summary className="cursor-pointer py-2 text-lg font-bold [font-stretch:108%]">
               {q}
             </summary>
             <p className="mt-2 max-w-[60ch] text-ink2">{a}</p>

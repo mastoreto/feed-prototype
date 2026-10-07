@@ -18,8 +18,10 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { motion } from "framer-motion";
 import {
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Download,
   GripVertical,
   ImagePlus,
@@ -72,6 +74,7 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
   const [view, setView] = useState<View>("piece");
   const [safe, setSafe] = useState(true);
   const [tab, setTab] = useState<Tab>("copy");
+  const [sheetOpen, setSheetOpen] = useState(false); // mobile: collapsed by default so the piece stays visible
   const [exporting, setExporting] = useState(false);
   const index = Math.min(sel, posts.length - 1);
   const post = posts[index];
@@ -127,9 +130,15 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
     });
   }
 
-  const ad = (
-    <div className="flex justify-center border-b border-hair bg-paper px-3 py-2 md:px-4">
-      <AdSlot kind={desktop ? "bar" : "bar-m"} />
+  // Both wrappers reserve their height in CSS, so the unit mounting after hydration causes no layout shift.
+  const barDesktop = (
+    <div className="hidden min-h-[107px] justify-center border-b border-hair bg-paper px-4 py-2 md:flex">
+      {desktop && <AdSlot kind="bar" />}
+    </div>
+  );
+  const barMobile = (
+    <div className="order-3 flex min-h-[67px] justify-center border-b border-hair bg-paper px-3 py-2 md:hidden">
+      {!desktop && <AdSlot kind="bar-m" />}
     </div>
   );
 
@@ -148,9 +157,9 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
           <Download className="i" /> Exportar
         </button>
       </div>
-      {desktop && ad}
+      {barDesktop}
 
-      <div className="flex min-h-[640px] flex-col md:grid md:grid-cols-[240px_minmax(0,1fr)_300px]">
+      <div className="flex min-h-[640px] flex-col md:grid md:grid-cols-[240px_minmax(0,1fr)_340px]">
         {/* pieces */}
         <aside
           className="rule-t md:rule-r order-2 grid content-start gap-2 bg-paper p-3 md:order-1 md:border-t-0 md:p-3.5"
@@ -160,7 +169,7 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
             <h3 className="field-label">Publicaciones ({posts.length})</h3>
             <button
               type="button"
-              className="btn min-h-9 px-2.5 py-1"
+              className="btn min-h-11 px-2.5 py-1 md:min-h-9"
               onClick={add}
             >
               <Plus className="i" />
@@ -286,7 +295,7 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
           )}
         </section>
 
-        {!desktop && <div className="order-3">{ad}</div>}
+        {barMobile}
 
         {/* inspector (bottom sheet on mobile) */}
         {post && (
@@ -298,7 +307,7 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
               Publicación {index + 1}
             </h3>
             <div
-              className="seg sticky top-0 z-[1] w-full bg-paper md:hidden"
+              className="rule-b sticky top-0 z-[1] -mx-3 flex items-stretch bg-paper px-3 md:hidden"
               role="tablist"
             >
               {(
@@ -312,19 +321,40 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
                   key={k}
                   type="button"
                   role="tab"
-                  className="flex-1"
+                  className={cn(
+                    "-mb-px min-h-11 flex-1 border-b-4 font-semibold",
+                    tab === k && sheetOpen
+                      ? "border-brand"
+                      : "border-transparent",
+                  )}
                   aria-selected={tab === k}
-                  onClick={() => setTab(k)}
+                  onClick={() => {
+                    setTab(k);
+                    setSheetOpen(true);
+                  }}
                 >
                   {t}
                 </button>
               ))}
+              <button
+                type="button"
+                className="grid size-11 place-items-center"
+                aria-label={sheetOpen ? "Contraer panel" : "Expandir panel"}
+                aria-expanded={sheetOpen}
+                onClick={() => setSheetOpen(!sheetOpen)}
+              >
+                {sheetOpen ? (
+                  <ChevronDown className="i" />
+                ) : (
+                  <ChevronUp className="i" />
+                )}
+              </button>
             </div>
 
             <div
               className={cn(
                 "gap-4",
-                tab === "copy" ? "grid" : "hidden",
+                tab === "copy" && sheetOpen ? "grid" : "hidden",
                 "md:grid",
               )}
             >
@@ -334,7 +364,7 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
                 </label>
                 <textarea
                   id="cap"
-                  className="field"
+                  className="field md:min-h-40"
                   rows={4}
                   value={post.caption}
                   onChange={(e) => patch({ caption: e.target.value })}
@@ -366,7 +396,7 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
             <div
               className={cn(
                 "gap-3",
-                tab === "img" ? "grid" : "hidden",
+                tab === "img" && sheetOpen ? "grid" : "hidden",
                 "md:grid",
               )}
             >
@@ -439,7 +469,7 @@ export function Editor({ platform, posts, onPosts, profile, toolbar }: Props) {
             <div
               className={cn(
                 "gap-4",
-                tab === "note" ? "grid" : "hidden",
+                tab === "note" && sheetOpen ? "grid" : "hidden",
                 "md:grid",
               )}
             >
@@ -566,7 +596,7 @@ function Item({
           <button
             type="button"
             aria-label="Mover antes"
-            className="rule grid h-8 w-9 place-items-center bg-paper disabled:opacity-40"
+            className="rule grid size-11 shrink-0 place-items-center bg-paper disabled:opacity-40"
             disabled={i === 0}
             onClick={() => onMove(-1)}
           >
@@ -575,7 +605,7 @@ function Item({
           <button
             type="button"
             aria-label="Mover después"
-            className="rule grid h-8 w-9 place-items-center bg-paper disabled:opacity-40"
+            className="rule grid size-11 shrink-0 place-items-center bg-paper disabled:opacity-40"
             disabled={i === count - 1}
             onClick={() => onMove(1)}
           >

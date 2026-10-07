@@ -57,7 +57,7 @@ export function ClientView({ id }: { id: string }) {
       <div className="grid gap-6 p-4 md:p-8">
         <Link
           href="/dashboard"
-          className="lab flex w-fit items-center gap-1 text-ink2"
+          className="lab flex min-h-11 w-fit items-center gap-1 text-ink2"
         >
           <ChevronLeft className="i" />
           Clientes
@@ -181,35 +181,37 @@ export function ClientView({ id }: { id: string }) {
               </ul>
             )}
 
-            <div className="rule-t pt-4">
-              {askDel ? (
-                <div className="flex flex-wrap items-center gap-3">
-                  <span>Se eliminarán también sus campañas.</span>
+            {editing && (
+              <div className="rule-t pt-4">
+                {askDel ? (
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span>Se eliminarán también sus campañas.</span>
+                    <button
+                      type="button"
+                      className="btn text-red"
+                      onClick={() => del.mutate({ id })}
+                    >
+                      Sí, eliminar cliente
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => setAskDel(false)}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                ) : (
                   <button
                     type="button"
                     className="btn text-red"
-                    onClick={() => del.mutate({ id })}
+                    onClick={() => setAskDel(true)}
                   >
-                    Sí, eliminar cliente
+                    Eliminar cliente
                   </button>
-                  <button
-                    type="button"
-                    className="btn"
-                    onClick={() => setAskDel(false)}
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  className="btn text-red"
-                  onClick={() => setAskDel(true)}
-                >
-                  Eliminar cliente
-                </button>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>

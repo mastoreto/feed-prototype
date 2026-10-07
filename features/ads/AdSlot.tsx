@@ -39,9 +39,10 @@ export function AdSlot({
   const [w, h] = SIZE[kind];
   const slot = SLOTS[kind];
   const pushed = useRef(false);
+  const box = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!CLIENT || !slot || pushed.current) return;
+    if (!CLIENT || !slot || pushed.current || !box.current?.offsetWidth) return; // skip hidden containers
     pushed.current = true;
     try {
       window.adsbygoogle ??= [];
@@ -53,6 +54,7 @@ export function AdSlot({
 
   return (
     <div
+      ref={box}
       className={`ad-box ${className}`}
       style={{ width: w, height: h, maxWidth: "100%" }}
     >

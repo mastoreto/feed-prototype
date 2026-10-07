@@ -55,14 +55,18 @@ export default function TryPage() {
   return (
     <div className="min-h-dvh bg-paper">
       <header className="flex items-center gap-4 bg-ink px-4 py-2.5 text-paper">
-        <Link href="/" className="disp text-sm [font-stretch:125%]">
+        <Link
+          href="/"
+          className="disp flex min-h-11 items-center whitespace-nowrap text-sm [font-stretch:125%]"
+        >
           Feed Prototype
         </Link>
         <Link
           href="/signup"
-          className="ml-auto text-sm font-semibold underline underline-offset-4"
+          className="btn btn-wht ml-auto !min-h-11 !py-1.5 text-sm whitespace-nowrap"
         >
-          Guardar en mi cuenta
+          <span className="sm:hidden">Crear cuenta</span>
+          <span className="max-sm:hidden">Guardar en mi cuenta</span>
         </Link>
       </header>
       <Editor
@@ -84,18 +88,20 @@ export default function TryPage() {
                 </button>
               ))}
             </div>
-            <input
-              aria-label="Nombre del cliente"
-              className="field min-w-32 flex-1 !min-h-9 !py-1 md:max-w-40 md:flex-none"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <input
-              aria-label="Usuario"
-              className="field min-w-32 flex-1 !min-h-9 !py-1 md:max-w-32 md:flex-none"
-              value={handle}
-              onChange={(e) => setHandle(e.target.value.replace(/^@/, ""))}
-            />
+            <div className="flex w-full gap-3 md:contents">
+              <input
+                aria-label="Nombre del cliente"
+                className="field min-w-0 flex-1 !min-h-11 !py-1 md:!min-h-9 md:max-w-40 md:flex-none"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input
+                aria-label="Usuario"
+                className="field min-w-0 flex-1 !min-h-11 !py-1 md:!min-h-9 md:max-w-32 md:flex-none"
+                value={handle}
+                onChange={(e) => setHandle(e.target.value.replace(/^@/, ""))}
+              />
+            </div>
           </>
         }
       />
