@@ -1,0 +1,22 @@
+# Local Postgres for development and tests. Matches STORAGE_DATABASE_URL in .env.example.
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: feedproto-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: feed
+      POSTGRES_DB: feedprototype
+    ports:
+      - "54329:5432"
+    volumes:
+      - feedproto-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d feedprototype"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  feedproto-pgdata:

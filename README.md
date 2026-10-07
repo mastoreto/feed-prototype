@@ -7,8 +7,8 @@ Stack: Next 16 (App Router, Cache Components) · Tailwind 4 · tRPC 11 + TanStac
 ## Arrancar
 
 ```bash
-cp .env.example .env            # DATABASE_URL, BETTER_AUTH_SECRET…
-docker run -d --name feedproto-pg -e POSTGRES_PASSWORD=feed -e POSTGRES_DB=feedprototype -p 54329:5432 postgres:17-alpine
+cp .env.example .env            # STORAGE_DATABASE_URL, BETTER_AUTH_SECRET…
+bun run db:up                   # Postgres local en Docker (docker-compose.yml)
 bun install                     # genera el cliente de Prisma
 bun run db:migrate
 bun run dev
